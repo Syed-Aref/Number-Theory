@@ -1,0 +1,31 @@
+import java.util.*;
+public class BinaryExponentialModulo {
+	static long moduloPow(long n,long pow,long mod)
+	{
+		long mult = 1;
+		while(pow>0)
+		{
+			if(pow%2!=0)
+			{
+				mult = ( (mult%mod)*(n%mod) )%mod;
+				pow--;
+			}
+			n = ( (n%mod)*(n%mod) )%mod;
+			pow/=2;	
+		}
+		return mult;
+	}
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		long n;
+		long pow;
+		long mod;
+		while(true)
+		{
+			n = sc.nextLong();
+			pow = sc.nextLong();
+			mod = sc.nextLong();
+			System.out.println( moduloPow(n,pow,mod) );
+		}
+	}
+}
