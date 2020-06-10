@@ -1,0 +1,36 @@
+package numbertheory;
+/* List of all prime factors */
+import java.util.ArrayList;
+import java.util.Scanner;
+public class ListOfPrimeFactors {
+	static ArrayList< Integer > listOfPrimeFactor(int n)
+	{
+		ArrayList<Integer> al = new ArrayList<Integer>();
+		while(n%2==0) 
+		{
+			al.add(2);
+			n = n/2;
+		}
+		for(int i = 3;i<= (int)Math.sqrt(n);i+=2 ) 
+		{
+			while(n%i==0) 
+			{
+				al.add(i);
+				n = n/i;
+			}
+		}
+		if(n>2)
+			al.add(n);
+		return al;
+	}
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n;
+		while(true)
+		{
+			n = sc.nextInt();
+			System.out.println( listOfPrimeFactor(n) );
+		}
+		
+	}
+}
