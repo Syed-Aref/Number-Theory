@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+using namespace std ;
+unsigned long long int ModuloInv(unsigned long long int a,unsigned long long int pow,unsigned long long int mod)
+{
+    unsigned long long int mult = 1;
+    while(pow!=0)
+    {
+        if(pow%2!=0)
+        {
+            mult = (mult%mod*a%mod)%mod;
+            pow--;
+        }
+        a = (a%mod*a%mod)%mod;
+        pow = pow/2;
+    }
+    return mult;
+}
+int main()
+{
+    ios_base::sync_with_stdio(false) ;
+    cin.tie(NULL) ;
+    unsigned long long int a,m,mod;
+    cin>>a>>m;
+    mod = 1000000009;
+    cout<<moduloInv(a,m-2,m)<<"\n";
+    return 0;
+}
