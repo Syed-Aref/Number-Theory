@@ -1,0 +1,23 @@
+	static int n = 100000000;
+	static boolean[] isNonPrimeArr = new boolean[n+1];
+	static ArrayList<Integer> pli = new ArrayList<Integer>();
+	static void generralSOE_Method()
+	{
+		pli.add(2);
+		int k;
+		for(int i = 3;i<=(int)(Math.sqrt(n));i+=2)
+		{
+			if(isNonPrimeArr[i]==true)
+				continue;
+			k = i;
+			for(int j = i*i;j<=n;j+=2*k)
+			{
+				isNonPrimeArr[j] = true;
+			}
+		}
+		for(int i = 3;i<=n;i+=2)
+		{
+			if( !isNonPrimeArr[i] )
+				pli.add(i);
+		}
+	}
