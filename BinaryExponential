@@ -1,0 +1,22 @@
+package numbertheory;
+import java.util.*;
+public class BinaryExponential {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		int pow = sc.nextInt();
+		int mult = 1;
+		while(pow>0)
+		{
+			if(pow%2!=0)
+			{
+				mult = mult*n;
+				pow--;
+			}
+			n = n*n;
+			pow/=2;	
+		}
+		System.out.println(mult);
+		
+	}
+}
