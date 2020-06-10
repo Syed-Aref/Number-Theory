@@ -1,7 +1,10 @@
+// Prime numbers in a list//
+import java.util.*;
+public class SOE01 {
 	static int n = 100000000;
 	static boolean[] isNonPrimeArr = new boolean[n+1];
 	static ArrayList<Integer> pli = new ArrayList<Integer>();
-	static void generralSOE_Method()
+	static void soeMethodAdvanced()
 	{
 		pli.add(2);
 		int k;
@@ -21,3 +24,15 @@
 				pli.add(i);
 		}
 	}
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		soeMethodAdvanced();
+		int n;
+		while(true)
+		{
+			n = sc.nextInt();
+			System.out.println( pli.get(n-1) );
+		}
+
+	}
+}
