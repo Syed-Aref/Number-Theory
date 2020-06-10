@@ -1,0 +1,32 @@
+/* List of distinct factors */ 
+package numbertheory;
+import java.util.*;
+public class GettingAllFactorsInList {
+	static ArrayList< Integer > allFactors(int n)
+	{
+		ArrayList<Integer> al = new ArrayList<Integer>();
+		al.add(1); 
+		double sqrtN = Math.sqrt(n*1.0);
+        for (int i=2; i<=(int)sqrtN; i++) 
+        { 
+            if (n%i==0) 
+            {  
+                al.add( i );
+                al.add( (n/i) );
+            } 
+        }
+        if((((int)(sqrtN))*1.0)==sqrtN)
+        	al.remove(al.size()-1);
+        al.add(n);
+		return al;
+	}
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n;
+		while(5==5) 
+		{
+			n = sc.nextInt();
+			System.out.println( allFactors(n) );
+		}
+	}
+}
