@@ -1,0 +1,265 @@
+*/ General SegmentedSOE */
+import java.util.*;
+public class SegmentedSOE {
+	static void primeGeneratorMethod(int a,int b) 
+	{
+		if(a==b) 
+		{
+			if(a%2==0)
+				return;
+			else
+			{
+				if(isPrime(a)==true)
+				{
+					System.out.println(a);
+				}
+				return;
+			}
+		}
+		int[] arr = new int[b-a+1]; 
+		for(int i = 0;i<=arr.length-1;i++)
+			arr[i] = i + a;
+		int k;
+		int j;
+		for(int i = 2;i<=(int)(Math.sqrt(b));) 
+		{
+			j = 0;
+			k = getIndexMethod(a,i);
+			if(k>=0 & k<=arr.length-1)
+			{
+				if(isPrime(arr[k])==true)
+					j = k + i;
+				else 
+					j = k;
+				for(;j<=arr.length-1;j+=i)
+					arr[j] = -1;
+			}
+			if(i==2)
+				i++;
+			else
+				i+=2;
+		}
+		for(int i1 = 0;i1<=arr.length-1;i1++)
+		{
+			if(arr[i1]!=-1)
+				System.out.println(arr[i1]);
+		}
+	}
+	static int getIndexMethod(int num,int i) {
+	    if(num%i==0)
+	        return 0;
+	    return (i-(num%i));
+	}	
+	static boolean isPrime(int n) 
+	{
+		if(n<2)
+			return false;
+		if(n%2==0) 
+		{
+			if(n==2)
+				return true;
+			else
+				 return false;
+		}
+		else 
+		{
+			for(int i = 3;i<=(int)(Math.sqrt(n));i+=2) 
+			{
+				if(n%i==0)
+					return false;
+			}
+			return  true;
+		}
+	}
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int t = sc.nextInt();
+		int a = sc.nextInt();
+		int b = sc.nextInt();
+    	if(b<=2) 
+    	{
+    		if(b==2)
+    			System.out.println(b);
+    	}
+    	else
+    	{
+	    	if(a<=2)
+	    	{
+	    		System.out.println(2);
+	    		a = 3;
+	    	}
+	    	primeGeneratorMethod(a,b);
+    	}
+    	t--;
+    	while(t-->0)
+    	{
+    		a = sc.nextInt();
+    		b = sc.nextInt();
+    		System.out.println();
+        	if(b<=2) 
+        	{
+        		if(b==2)
+        			System.out.println(b);
+        	}
+        	else
+        	{
+    	    	if(a<=2)
+    	    	{
+    	    		System.out.println(2);
+    	    		a = 3;
+    	    	}
+    	    	primeGeneratorMethod(a,b);
+        	}
+    	}
+	}
+}
+
+/* Optimized SOE */
+import java.util.*;
+public class SegmentedSOE_Optimized {
+	static int rootN = 31622;
+	static boolean compRoot[] = new boolean[31622+1];
+	static void rootFunction()
+	{
+		for(int i = 4;i<=rootN;i+=2)
+		{
+			compRoot[i] = true;
+		}
+		int k;
+		for(int i = 3;i<=rootN;i+=2)
+		{
+			if(compRoot[i]==true)
+				continue;
+			k = i;
+			for(int j = i*i;j<=rootN;j+=2*k)
+			{
+				if(j>=0 & j<=rootN)
+					compRoot[j] = true;
+			}
+		}
+	}
+	static void segmentedSOE(int a,int b)
+	{
+		if(a==b) 
+		{
+			if(a%2==0)
+				return;
+			else
+			{
+				if(isPrime(a)==true)
+				{
+					System.out.println(a);
+				}
+				return;
+			}
+		}
+		boolean[] segComp = new boolean[b-a+1];
+		int rootB = (int)(Math.sqrt(b));
+		int n = segComp.length-1;
+		int index;
+		if(a%2==0)
+			index = 0;
+		else
+			index = 1;
+		if(a+index==2)
+			index+=2;
+		for(int i = index;i<=n;i+=2)
+			segComp[i] = true;
+		int j;
+		int k;
+		index = 0;
+		for(int i = 3;i<=rootB;i+=2)
+		{
+			if(compRoot[i])
+				continue;
+			j = 0;
+			
+			if(a%i==0)
+				index = 0;
+			else
+				index = i-(a%i);
+			
+			if( isPrime(a+index) )
+				j = index+i;
+			else
+				j = index;
+			if( (a+j)%2==0 )
+				j+=i;
+			k = 2*i;
+			for(;j<=n;j+=k)
+			{
+				if(j>=0 & j<=n)
+					segComp[j] = true;
+			}
+		}
+		for(int i = 0;i<=n;i++)
+		{
+			if(segComp[i]==false)
+				System.out.println(a+i);
+		}
+	}
+	static boolean isPrime(int n) 
+	{
+		if(n<2)
+			return false;
+		if(n%2==0) 
+		{
+			if(n==2)
+				return true;
+			else
+				return false;
+		}
+		else 
+		{
+			for(int i = 3;i<=(int)(Math.sqrt(n));i+=2) 
+			{
+				if(n%i==0)
+					return false;
+			}
+			return  true;
+		}
+	}
+	
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		rootFunction();
+		int t = sc.nextInt();
+		int a = sc.nextInt();
+		int b = sc.nextInt();
+    	if(b<=2) 
+    	{
+    		if(b==2)
+    			System.out.println(b);
+    	}
+    	else
+    	{
+	    	if(a<=2)
+	    	{
+	    		System.out.println(2);
+	    		a = 3;
+	    	}
+	    	segmentedSOE(a,b);
+    	}
+    	t--;
+    	while(t-->0)
+    	{
+    		a = sc.nextInt();
+    		b = sc.nextInt();
+    		System.out.println();
+        	if(b<=2) 
+        	{
+        		if(b==2)
+        			System.out.println(b);
+        	}
+        	else
+        	{
+    	    	if(a<=2)
+    	    	{
+    	    		System.out.println(2);
+    	    		a = 3;
+    	    	}
+    	    	segmentedSOE(a,b);
+        	}
+    	}
+	}
+}
