@@ -1,0 +1,82 @@
+#include <bits/stdc++.h>
+
+#include <math.h>
+
+using namespace std ;
+bool notPrime[1000001] ;
+
+unsigned long int n = 1000000;
+unsigned long long int mainArr[1000001];
+unsigned long long int sumArr[1000001];
+void sieveOn()
+{
+    notPrime[0] = true;
+    notPrime[1] = true;
+    for(unsigned long int i = 4;i<=n;i+=2)
+        notPrime[i] = true;
+    unsigned long int k;
+    for(unsigned long int i = 3;i<=n;i+=2)
+    {
+        if(notPrime[i]==true)
+            continue;
+        k = i;
+        for(unsigned long int j = i*i;j<=n;j+=2*k)
+        {
+            if(j>=0 & j<=n)
+                notPrime[j] = true;
+        }
+
+    }
+    /*
+    cout<<arrPrime[97];
+    */
+
+}
+void calculation()
+{
+    mainArr[2] = 1;
+    mainArr[3] = 1;
+    sumArr[2] = 1;
+    sumArr[3] = 2;
+    for(unsigned long int i = 4;i<=n;i++)
+    {
+        if(i%2==0)
+            mainArr[i] = mainArr[2]+mainArr[i/2];
+        else
+        {
+            if(notPrime[i]==false)
+                mainArr[i] = 1;
+            else
+            {
+                for(unsigned long int j = 3;j<=(int)(sqrt(i));j+=2)
+                {
+                    if(i%j==0)
+                    {
+                        mainArr[i] = mainArr[j] + mainArr[i/j];
+                        break;
+                    }
+                }
+            }
+            sumArr[i] = mainArr[i] + sumArr[i-1];
+        }
+        sumArr[i] = mainArr[i] + sumArr[i-1];
+    }
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false) ;
+    cin.tie(NULL);
+    /*
+    .... ....
+    .... ....
+    .... ....
+    .... ....
+    .... ....
+    */
+    unsigned long int x;
+    sieveOn();
+    calculation();
+    while(cin >> x) cout << sumArr[x] << "\n" ;
+    return 0;
+}
