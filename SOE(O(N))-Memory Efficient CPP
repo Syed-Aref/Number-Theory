@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+#include <iostream>
+using std::cout;
+using std::cin;
+using std::vector;
+using std::bitset;
+const int MAXN = 105;
+vector<int> prime;
+bitset<MAXN+1>  is_composite;
+
+void sieve (int n) {
+	for (int i = 2; i < n; ++i) {
+		if (is_composite[i]==0) prime.push_back (i);
+		for (int j = 0; j < prime.size () && i * prime[j] <=n; ++j) {
+			is_composite[i * prime[j]] = 1;
+			if (i % prime[j] == 0) break;
+		}
+	}
+}
+
+int main()
+{
+    int n;
+    sieve(MAXN);
+    while(true)
+    {
+        cin>>n;
+        cout<<is_composite[n]<<"\n";
+    }
+}
