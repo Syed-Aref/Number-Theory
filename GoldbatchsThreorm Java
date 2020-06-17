@@ -1,0 +1,88 @@
+import java.io.*;
+import java.nio.charset.Charset;
+public class GoldbatchsThreorm {
+	static boolean isPrime(int n) 
+	{
+		if(n<2)
+			return false;
+		if(n%2==0) 
+		{
+			if(n==2)
+				return true;
+			else
+				return false;
+		}
+		else 
+		{
+			for(int i = 3;i<=(int)(Math.sqrt(n));i+=2) 
+			{
+				if(n%i==0)
+					return false;
+			}
+			return  true;
+		}
+	}
+	public static void main(String[] args) {
+		Charset charset = Charset.forName("ascii");
+	    FastIO fio = new FastIO(System.in, System.out, charset);
+	    int n;
+	    int[] a = new int[2];
+	    int start;
+	    int end;
+	    boolean ips;
+	    boolean ipe;
+	    n = fio.readInt();
+	    while(n!=0) 
+	    {
+	    	a[0] = -1;
+	    	a[1] = -1;
+	    	start = 3;
+	    	end = n-1;
+	    	ips = false;
+	    	ipe = false;
+	    	while(start<=end) 
+	    	{
+	    		ips = isPrime(start);
+	    		ipe = isPrime(end);
+	    		if(start==end) 
+	    		{
+	    			if( ips==true && (start+end==n) )
+	    			{
+	    				a[0] = start;
+	    				a[1] = end;
+	    			}
+	    		}
+	    		if( ips==true && ipe==true ) 
+	    		{
+	    			if(start+end==n)
+	    			{
+	    				a[0] = start;
+	    				a[1] = end;
+	    				break;
+	    			}
+	    			else if(start+end>n)
+	    				end-=2;
+	    			else
+	    				start+=2;
+	    		}
+	    		else
+	    		{
+	    			if( ips==true && ipe==false )
+	    				end-=2;
+	    			else if( ips==false && ipe==true )
+	    				start+=2;
+	    			else
+	    			{
+	    				start+=2;
+	    				end-=2;
+	    			}
+	    		}
+	    	}
+	    	if(a[0]+a[1]==n)
+	    		System.out.printf("%d = %d + %d\n",n,a[0],a[1]);
+	    	else
+	    		System.out.printf("Goldbach's conjecture is wrong.\n");
+	    	n = fio.readInt();
+	    }
+	}
+}
