@@ -1,0 +1,29 @@
+import java.util.*;
+public class SOE_MemeoryEfficient_In_LinearTime {
+	static Vector<Integer> prime = new Vector<Integer>();
+	static BitSet is_composite = new BitSet(); 
+	static int maxN = 1000;
+	static void sieve(int n)
+	{
+		is_composite.set(0) ; is_composite.set(1) ;
+		for (int i = 2; i < n; ++i) {
+			if (is_composite.get(i)==false) prime.add (i);
+			for (int j = 0; j < prime.size () && i * prime.get(j) <=n; ++j) {
+				is_composite.set( i*prime.get(j) );
+				if (i % prime.get(j) == 0) break;
+			}
+		}
+	}
+	public static void main(String[] args) {
+		sieve(maxN);
+		int n;
+		Scanner sc = new Scanner(System.in);
+		while(true)
+		{
+			n = sc.nextInt();
+			System.out.println( is_composite.get(n) );
+		}
+		
+	}
+
+}
