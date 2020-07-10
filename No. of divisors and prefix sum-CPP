@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
-
+#define PI acos(-1)
 #include <math.h>
-
+typedef long long ll ;
 using namespace std ;
 bool notPrime[1000001] ;
 
@@ -57,7 +57,6 @@ void calculation()
                     }
                 }
             }
-            sumArr[i] = mainArr[i] + sumArr[i-1];
         }
         sumArr[i] = mainArr[i] + sumArr[i-1];
     }
