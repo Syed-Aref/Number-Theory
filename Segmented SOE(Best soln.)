@@ -1,0 +1,91 @@
+#include <vector>
+#include <iostream>
+#include <bitset>
+#include <math.h>
+#include <bits/stdc++.h>
+using namespace std;
+const int MAXN = 32000;
+vector<int> prime;
+bitset<MAXN + 1>  is_composite;
+ 
+void sieve(int n) {
+ 
+	is_composite[0] = is_composite[1] = 1;
+	for (int i = 2; i < n; ++i) {
+		if (is_composite[i] == 0) prime.push_back(i);
+		int sz = prime.size();
+		for (int j = 0; j < sz && i * prime[j] <= n; ++j) {
+			is_composite[i * prime[j]] = 1;
+			if (i % prime[j] == 0) break;
+		}
+	}
+}
+ 
+int main()
+{
+ 
+	int tests;// m, n;
+	cin >> tests;
+	sieve(MAXN);
+	while (tests-- > 0)
+	{
+		int m, n;
+		cin >> m >> n;
+		if (n < 2)
+		{
+			cout << endl;
+			continue;
+		}
+		if (m < 2)
+			m = 2;
+		//cout << "Code" << endl;
+		bool comp[100000 + 1];
+		memset( comp, 0, sizeof(comp) );
+		//bitset<n - m + 1> bst;
+		int rootn = (int)(sqrt(n));
+		int i = 0;
+		int limit = n - m;
+		int primeL = prime.size();
+		while (true)
+		{
+			if (i >= primeL)
+				break;
+			int p = prime[i];
+			if (p > rootn)
+				break;
+			int s = m / p;
+			if (m % p != 0)
+				s = s + 1;
+			s = s * p;
+			if (s < is_composite.size() && is_composite[s] == 0)
+				s = s + p;
+			//cout << "Prime : " << p;
+			//cout << " Nearest : " << s;
+			//cout << " Index:" << s - m << endl;
+			//cout << p << " : " << s << endl;
+			for (int j = s - m; j <= limit; j += p)
+			{
+				//cout << " " << j;
+				comp[j] = 1;
+			}
+			//cout << endl;
+			i++;
+		}
+		for (int j = 0; j <= limit; j++)
+		{
+			if (comp[j] == 0)
+				cout << j + m << endl;
+			
+		}
+		//cout << "ends" << endl;
+		cout << endl;
+	}
+} 
+
+/*
+O(n) = root(N) + Tests*(8*L)
+Where,
+N = 10^9
+L = n - m (Range between two numbers, where L(max) = 10^5)
+Tests = No. of test cases
+*/
