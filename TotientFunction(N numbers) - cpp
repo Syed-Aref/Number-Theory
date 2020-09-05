@@ -1,0 +1,21 @@
+const int N  = 10000;
+vector<long long int> phi(N+1);
+
+void totient_func()
+{
+    phi[0] = 0;
+    phi[1] = 1;
+    for(int i = 2;i<N;i++)
+    {
+        phi[i] = i - 1; // Assumes all numbers are prime
+    }
+    for(int i = 2;i<N;i++)
+    {
+        for(int j = 2*i;j<N;j+=i)
+        {
+            phi[j] = phi[j] - phi[i];
+        }
+    }
+}
+
+// O(n) = nlogn
