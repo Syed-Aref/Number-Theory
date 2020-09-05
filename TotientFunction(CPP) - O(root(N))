@@ -1,0 +1,18 @@
+long long int totient_func(long long int n)
+{
+
+    long long int rslt = n;
+    for(long long int i = 2;i*i<=n;i++)
+    {
+        if(n%i==0)
+        {
+            while(n%i==0)
+                n = n / i;
+            rslt = rslt - rslt/i;
+        }
+    }
+    if(n>=2)
+        rslt = rslt - rslt/n;
+    return rslt;
+
+}
